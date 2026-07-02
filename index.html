@@ -215,17 +215,17 @@
   </div>
 
   <section>
-    <h2>Suggested positioning terms</h2>
-    <p class="section-note">These are suggested starting points — not pulled from a live keyword tool. They're ranked by estimated search interest based on how these topics tend to perform, broadest appeal first. Use them as a prompt to find your own language, then verify with Google Trends or YouTube autocomplete before committing to one.</p>
+    <h2>Searchable keywords for your niche</h2>
+    <p class="section-note">Real search patterns your audience types into YouTube and Google, combined with your exact niche. Not a generic list — every keyword uses the words you type.</p>
     <div id="pos-generator">
-      <p class="section-note">Type your niche first, then generate positioning terms built specifically for your topic — not a generic list.</p>
+      <p class="section-note">Type your niche, generate 10 searchable keywords, then verify demand with the free tools below.</p>
       <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;">
         <input type="text" id="nicheForPos" placeholder="e.g. home electrical repair, dog training, personal finance" style="flex:1;min-width:220px;">
-        <button class="toggle-btn" id="genPosBtn" style="margin-top:0;white-space:nowrap;">Generate terms</button>
+        <button class="toggle-btn" id="genPosBtn" style="margin-top:0;white-space:nowrap;">Generate keywords</button>
       </div>
-      <div id="pos-loading" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--gray);margin-top:14px;">Generating terms for your niche...</div>
+      <div id="pos-loading" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--gray);margin-top:14px;">Generating keywords for your niche...</div>
       <div class="pos-grid" id="ai-pos-grid" style="margin-top:16px;"></div>
-      <div id="pos-note" style="display:none;" class="section-note" style="margin-top:10px;">These 10 terms combine your niche with proven positioning patterns. Pick one that resonates, refine it in your own words, then verify with Google Trends or YouTube autocomplete before committing.</div>
+      <div id="pos-note" style="display:none;" class="section-note" style="margin-top:10px;">These 10 keywords combine your niche with common search patterns real people type into YouTube and Google. Click one to update the YouTube verify link below so you can check autocomplete before you build content around it.</div>
 
       <div id="verify-section" style="display:none;">
         <div class="verify-box" style="margin-top:20px;">
@@ -310,8 +310,8 @@
 </div>
 
 <script>
-// Positioning term generator — combines the user's niche with 10 proven positioning patterns.
-// Always niche-specific because every term embeds the exact words the user typed.
+// Keyword generator — combines the user's niche with 10 common search patterns.
+// Real modifiers people type into YouTube and Google. Always niche-specific.
 document.getElementById('genPosBtn').addEventListener('click', function(){
   const niche = document.getElementById('nicheForPos').value.trim();
   if(!niche){ alert('Type your niche first.'); return; }
@@ -324,19 +324,18 @@ document.getElementById('genPosBtn').addEventListener('click', function(){
   note.style.display = 'none';
   verifySection.style.display = 'none';
 
-  const terms = generatePositioningTerms(niche);
+  const keywords = generateSearchKeywords(niche);
 
-  terms.forEach((t, i) => {
+  keywords.forEach((k, i) => {
     const d = document.createElement('div');
     d.className = 'pos-item';
     d.style.cursor = 'pointer';
-    d.title = 'Click to use this term';
-    d.innerHTML = `<span class="pos-rank">${String(i+1).padStart(2,'0')}</span><span class="pos-term">${t}</span>`;
+    d.title = 'Click to check this keyword on YouTube';
+    d.innerHTML = `<span class="pos-rank">${String(i+1).padStart(2,'0')}</span><span class="pos-term">${k}</span>`;
     d.addEventListener('click', () => {
-      document.getElementById('positioning').value = t;
       document.getElementById('niche').value = niche;
       const ytLink = document.getElementById('ytVerifyLink');
-      if(ytLink) ytLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(t);
+      if(ytLink) ytLink.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(k);
       document.querySelectorAll('#ai-pos-grid .pos-item').forEach(el => el.style.background = '');
       d.style.background = 'rgba(63,90,72,0.08)';
     });
@@ -347,20 +346,20 @@ document.getElementById('genPosBtn').addEventListener('click', function(){
   verifySection.style.display = 'block';
 });
 
-// 10 positioning patterns — each embeds the user's niche in a different framing.
-function generatePositioningTerms(niche){
+// 10 search patterns — real modifiers people type into YouTube/Google combined with the niche.
+function generateSearchKeywords(niche){
   const n = niche.toLowerCase().trim();
   return [
-    `${n} community`,
-    `${n} circle`,
-    `paid ${n} community`,
-    `small ${n} membership`,
-    `${n} mentorship`,
-    `${n} peer network`,
-    `${n} accountability group`,
-    `direct-pay ${n} community`,
-    `${n} learning circle`,
-    `${n} inner circle`
+    `${n} for beginners`,
+    `${n} tutorial`,
+    `${n} tips`,
+    `${n} mistakes to avoid`,
+    `${n} step by step`,
+    `learn ${n}`,
+    `${n} basics`,
+    `${n} checklist`,
+    `${n} guide`,
+    `${n} explained`
   ];
 }
 
